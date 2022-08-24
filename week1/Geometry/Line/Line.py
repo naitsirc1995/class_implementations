@@ -31,17 +31,21 @@ class Line:
             self.slope = slope
             self.y_intersection = y_intersection
         
-
+    
 
     @property
     def slope(self)->float:
         if self._slope:
             return self._slope
+        elif self.is_vertical():
+            return float('inf')
+        elif self.is_horizontal():
+            return 0
         elif self.p1 and self.p2:
-            return (self.p2.y_coordinate - self.p1.y_coordinate)/(self.p2.x_coordinate - self.p2.x_coordinate)
+            return (self.p2.y_coordinate - self.p1.y_coordinate)/(self.p2.x_coordinate - self.p1.x_coordinate)
         
         elif (self.p1 or self.p2) and self.y_intersection:            
-            point:Point = list(filter(lambda x : x != None,[self.p1,self.p2]))[0]
+            point:Point = self.point
             if point.x_coordinate == 0:
                 raise ValueError("[error] provided point can't have x-coordinate=0")
             return (point.y_coordinate - self.y_intersection)/point.x_coordinate
@@ -51,13 +55,14 @@ class Line:
     
     @slope.setter
     def slope(self,slope_value:float)->None:
-        if not self._slope:
-            raise ValueError("Slope was already provided")
+        if self._slope:
+            raise ValueError("Slope was already provided")        
         elif (slope_value == float('inf')) and not (self.p1 or self.p2):
             raise ValueError("With an infinite slope at least one point must be provided")
         elif (slope_value == 0) and not (self.p1 or self.p2):
             raise ValueError("With a zero slope at least one point must be provided")
         else:
+            print(f"[info] slope was set with value {slope_value}")
             self._slope = slope_value
     
 
@@ -66,16 +71,24 @@ class Line:
     def y_intersection(self)->float:
         if self._y_intersection:
             return self._y_intersection
+        elif (self.is_horizontal()):
+            return self.point.y_coordinate
+        elif (self.is_vertical()):
+            raise ValueError("[error] vertical line has no y-intersection")
         elif (self.p1 or self.p2) and self.slope:
-            point:Point = list(filter(lambda x : x != None,[self.p1,self.p2]))[0]
+            point:Point = self.point
             return point.y_coordinate - self.slope*point.x_coordinate
+        
+        
+        else:
+            raise ValueError("[error] y-intersection can't be computed")
     
     @y_intersection.setter
     def y_intersection(self,y_intersection_value)->None:
-        if not self._y_intersection:            
+        if self._y_intersection:            
             raise ValueError("y-intersection was already provided")
         else:
-            print(f"[info] {y_intersection_value} is set as y-intersection")
+            print(f"[info] y-intersection was set with value {y_intersection_value}")
             self._y_intersection = y_intersection_value
 
 
@@ -85,11 +98,12 @@ class Line:
     
     @p1.setter
     def p1(self,p1_value)->None:
-        if not self._p1:
+        if self._p1:            
             raise ValueError("p1 point was already provided")
         else:
             print(f"[info] {p1_value} is a point of the line")
             self._p1 = p1_value
+    
     
     @property
     def p2(self)->Point:
@@ -97,12 +111,19 @@ class Line:
     
     @p2.setter
     def p2(self,p2_value)->None:
-        if not self._p2:
+        if self._p2:
             raise ValueError("p2 point was already provided")
         else:
             print(f"[info] {p2_value} is a point of the line")
             self._p2 = p2_value
 
+    @property
+    def point(self):
+        if self.p1 or self.p2:
+            point:Point = list(filter(lambda x : x != None,[self.p1,self.p2]))[0]
+            return point
+        else:
+            raise ValueError("There must be at least one point")
 
     def is_vertical(self)->boolean:
         if self.p1 and self.p2:
@@ -115,9 +136,18 @@ class Line:
     def is_horizontal(self)->boolean:        
         if self.p1 and self.p2:
             return (self.p1.y_coordinate == self.p2.y_coordinate)
-        elif self.slope:
+        elif self.slope and (self.p1 or self.p2):
             return (self.slope == 0)
         else:
             raise ValueError("[error] can not be determined verticality")
     
+    def belongs(self,point:Point)->boolean:
+        if self.is_vertical():            
+            return (self.point.x_coordinate == point.x_coordinate)
+        
+        elif self.is_horizontal():
+            return (self.point.y_coordinate == point.y_coordinate)
+        
+        else:
+            return point.y_coordinate == point.x_coordinate*self.slope + self.y_intersection
     

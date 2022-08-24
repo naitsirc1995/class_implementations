@@ -2,12 +2,12 @@ from Geometry.Point.Point import Point
 from Geometry.Polygon.Polygon import Polygon
 from Geometry.Line.Line import Line
 
-
 def main():
     myPoint1 = Point(1,2)
     myPoint2 = Point(2,3)
     pol = Polygon([myPoint1,myPoint2,myPoint2])
-    line = Line()
+    line = Line(p1=Point(0,1),p2=Point(1,1))
+    print(line.belongs(Point(2,3)))
 
 
 if __name__ == '__main__':
