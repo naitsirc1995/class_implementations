@@ -26,7 +26,7 @@ class Polygon:
             self._vertices = value
     
     @property
-    def lines(self)->List[Point]:
+    def lines(self)->List[Line]:
         print("[warning] the vertices provided should be given in order")
         print("[warning] the vertices provided should represent a simple polygon")
         lines:List[Line] = []
@@ -34,3 +34,9 @@ class Polygon:
         for i in range(0,total_vertices):
             lines.append(Line(p1=self.vertices[i],p2 = self.vertices[(i+1)%total_vertices]))
         return lines
+    
+    def is_in_boundary(self,point:Point):        
+        for line in self.lines:
+            if line.is_between_points(line_point_1=line.p1,line_point_2 = line.p2,point=point):
+                return True
+        return False

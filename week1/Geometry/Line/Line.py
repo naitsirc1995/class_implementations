@@ -151,3 +151,31 @@ class Line:
         else:
             return point.y_coordinate == point.x_coordinate*self.slope + self.y_intersection
     
+    def is_between_points(self,line_point_1:Point,line_point_2:Point,point:Point):
+        if not self.belongs(line_point_1) or not self.belongs(line_point_2):
+            ValueError("[error] one of the points given does not belong to the line")
+        if self.belongs(line_point_1) and self.belongs(line_point_2) and self.belongs(point):
+            print(f"[info] points {line_point_1} and {line_point_2} were given")
+            print(f"[info] asserting if {point} is in between points given")
+            if self.is_vertical():
+                min_y = min(line_point_1.y_coordinate,line_point_2.y_coordinate)
+                max_y = max(line_point_1.y_coordinate,line_point_2.y_coordinate) 
+                return (min_y < point.y_coordinate) and (max_y > point.y_coordinate)
+            elif self.is_horizontal():
+                min_x = min(line_point_1.x_coordinate,line_point_2.y_coordinate)
+                max_x = max(line_point_1.x_coordinate,line_point_2.y_coordinate)
+                return (min_x < point.x_coordinate) and (max_x > point.x_coordinate)
+            else:
+                min_y = min(line_point_1.y_coordinate,line_point_2.y_coordinate)
+                max_y = max(line_point_1.y_coordinate,line_point_2.y_coordinate)
+                min_x = min(line_point_1.x_coordinate,line_point_2.y_coordinate)
+                max_x = max(line_point_1.x_coordinate,line_point_2.y_coordinate)
+                return (min_y < point.y_coordinate) and (max_y > point.y_coordinate) and (min_y < point.y_coordinate) and (max_y > point.y_coordinate)
+
+        else:
+            print(f"[info] point {point} is not part of the line")
+            return False
+                        
+            
+
+    
