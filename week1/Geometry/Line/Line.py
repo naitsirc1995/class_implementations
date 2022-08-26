@@ -1,4 +1,4 @@
-from xmlrpc.client import boolean
+from __future__ import annotations
 from Geometry.Point.Point import Point
 
 class Line:
@@ -16,13 +16,14 @@ class Line:
         if not p1 and not p2 and not slope and y_intersection:
             raise ValueError("[error] line y_intersection needed")
         
-        if not p1 and not p2 and slope and not y_intersection:
+        if p1 and not p2 and slope and not y_intersection:
             raise ValueError("[error] y_intersection needed to make a line")
         
-        if p1 and not p2 and not slope and not y_intersection:
+        if (p1 is not None and  p2 is None) and (slope is None and y_intersection is None):
+            print(p1,p2,slope,y_intersection)
             raise ValueError("[error] a second point or a slope is needed to form a line")
 
-        if not p1 and p2 and not slope and not y_intersection:
+        if (p1 is None and p2 is not None) and (slope is None and y_intersection is None):
             raise ValueError("[error] a second point or a slope is needed to form a line")
         
         else:
@@ -118,30 +119,30 @@ class Line:
             self._p2 = p2_value
 
     @property
-    def point(self):
+    def point(self)->Point:
         if self.p1 or self.p2:
             point:Point = list(filter(lambda x : x != None,[self.p1,self.p2]))[0]
             return point
         else:
             raise ValueError("There must be at least one point")
 
-    def is_vertical(self)->boolean:
-        if self.p1 and self.p2:
+    def is_vertical(self)->bool:
+        if self.p1 is not None and self.p2 is not None:
             return (self.p1.x_coordinate == self.p2.x_coordinate)
-        elif self.slope:
+        elif self.slope is not None and (self.p1 is None or self.p2 is None):
             return (self.slope == float('inf'))
         else:            
             raise ValueError("[error] can not be determined verticality")
     
-    def is_horizontal(self)->boolean:        
-        if self.p1 and self.p2:
+    def is_horizontal(self)->bool:        
+        if self.p1 is not None and self.p2 is not None:
             return (self.p1.y_coordinate == self.p2.y_coordinate)
-        elif self.slope and (self.p1 or self.p2):
+        elif self.slope is not None and (self.p1 is None or self.p2 is None):
             return (self.slope == 0)
         else:
             raise ValueError("[error] can not be determined verticality")
     
-    def belongs(self,point:Point)->boolean:
+    def belongs(self,point:Point)->bool:
         if self.is_vertical():            
             return (self.point.x_coordinate == point.x_coordinate)
         
@@ -151,17 +152,19 @@ class Line:
         else:
             return point.y_coordinate == point.x_coordinate*self.slope + self.y_intersection
     
-    def is_between_points(self,line_point_1:Point,line_point_2:Point,point:Point):
+    def is_between_points(self,line_point_1:Point,line_point_2:Point,point:Point)->bool:
         if not self.belongs(line_point_1) or not self.belongs(line_point_2):
             ValueError("[error] one of the points given does not belong to the line")
         if self.belongs(line_point_1) and self.belongs(line_point_2) and self.belongs(point):
             print(f"[info] points {line_point_1} and {line_point_2} were given")
             print(f"[info] asserting if {point} is in between points given")
             if self.is_vertical():
+                print("did I get here?")
                 min_y = min(line_point_1.y_coordinate,line_point_2.y_coordinate)
                 max_y = max(line_point_1.y_coordinate,line_point_2.y_coordinate) 
                 return (min_y < point.y_coordinate) and (max_y > point.y_coordinate)
             elif self.is_horizontal():
+                
                 min_x = min(line_point_1.x_coordinate,line_point_2.y_coordinate)
                 max_x = max(line_point_1.x_coordinate,line_point_2.y_coordinate)
                 return (min_x < point.x_coordinate) and (max_x > point.x_coordinate)
@@ -177,5 +180,23 @@ class Line:
             return False
                         
             
+    def is_line_intersection_between_points(self,line:Line, line_point_1:Point,line_point_2:Point)->bool:
+        if self.is_vertical():                
+            return self.is_between_points(line_point_1=line_point_1,line_point_2=line_point_2,point=Point(line_point_1.x_coordinate,line.point.y_coordinate))                
+        elif self.is_horizontal():
+            return line.point.y_coordinate == line_point_1.y_coordinate
+        else:
+            y_intersection = line.point.y_coordinate
+            x_intersection = (y_intersection - self.y_intersection)/self.slope
+            return self.is_between_points(line_point_1=line_point_1,line_point_2=line_point_2,point=Point(x_intersection,y_intersection))        
+            
+                
 
-    
+
+    def evaluate_x_coordinate(self,x_value)->float:
+        if self.is_vertical():
+            raise ValueError(f"[error] can not evaluate {x_value} in horizontal line")
+        elif self.is_horizontal():
+            return self.point.y_coordinate
+        else:
+            return x_value*self.slope + self.y_intersection
