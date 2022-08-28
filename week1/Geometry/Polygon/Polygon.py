@@ -53,14 +53,18 @@ class Polygon:
                 poligon_line:Line = self.lines[i]                
                 vertex1 = poligon_line.p1
                 vertex2 = poligon_line.p2
-                if vertex1.y_coordinate == point.y_coordinate and vertex1.x_coordinate > point.x_coordinate:
+                if poligon_line.is_horizontal():
+                    continue
+                elif vertex1.y_coordinate == point.y_coordinate and vertex1.x_coordinate > point.x_coordinate:
                     final_count+=self.count_vertex_intersections(vertex1,self.lines[(i-1)%total_lines],poligon_line)
                 elif vertex2.y_coordinate == point.y_coordinate and vertex2.x_coordinate > point.x_coordinate:
                     final_count+=self.count_vertex_intersections(vertex1,poligon_line,self.lines[(i+1)%total_lines])
                 else:                    
-                    if (poligon_line.is_line_intersection_between_points(ray,vertex1,vertex2) and max(poligon_line.p1.x_coordinate,poligon_line.p2.x_coordinate) > point.x_coordinate and point.x_coordinate > 0) or  (poligon_line.is_line_intersection_between_points(ray,vertex1,vertex2) and min(poligon_line.p1.x_coordinate,poligon_line.p2.x_coordinate) > point.x_coordinate and point.x_coordinate < 0):
-                        print(f"final count was augmented with line {poligon_line.p1},{poligon_line.p2}")
-                        final_count+=1                        
+                    if poligon_line.is_line_intersection_between_points(ray,vertex1,vertex2):
+                        x_intersection = poligon_line.get_x_intersection(ray,vertex1,vertex2)
+                        if x_intersection > ray.point.x_coordinate:
+                            print(f"final count was augmented with line {poligon_line.p1},{poligon_line.p2}")
+                            final_count+=1                        
                     
             print(f"final count {final_count}")
             return final_count
@@ -75,8 +79,8 @@ class Polygon:
 
             if (p1.y_coordinate - vertex.y_coordinate > 0 and p2.y_coordinate - vertex.y_coordinate > 0) or (p1.y_coordinate - vertex.y_coordinate < 0 and p2.y_coordinate - vertex.y_coordinate < 0):
                 return 0 
-            else:
-                print(f"final count was augmented with vertex {vertex}")
+            else:                
+                print(f"[info] final count was augmented with vertex {vertex}")
                 return 1
 
 

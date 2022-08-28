@@ -190,8 +190,16 @@ class Line:
             x_intersection = (y_intersection - self.y_intersection)/self.slope
             return self.is_between_points(line_point_1=line_point_1,line_point_2=line_point_2,point=Point(x_intersection,y_intersection))        
             
-                
-
+    def get_x_intersection(self,line:Line, line_point_1:Point,line_point_2:Point):
+        intersection_bool = self.is_line_intersection_between_points(line,line_point_1,line_point_2)
+        if intersection_bool and self.is_vertical():
+            return line_point_1.x_coordinate
+        elif intersection_bool:
+            return (line.point.y_coordinate - self.y_intersection)/self.slope
+        elif self.is_horizontal():
+            raise ValueError("[error] can not handle horizontal lines")
+        else:
+            raise ValueError("[error] there is not intersection between lines")
 
     def evaluate_x_coordinate(self,x_value)->float:
         if self.is_vertical():
