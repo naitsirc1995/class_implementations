@@ -190,7 +190,7 @@ class Line:
             x_intersection = (y_intersection - self.y_intersection)/self.slope
             return self.is_between_points(line_point_1=line_point_1,line_point_2=line_point_2,point=Point(x_intersection,y_intersection))        
             
-    def get_x_intersection(self,line:Line, line_point_1:Point,line_point_2:Point):
+    def get_x_intersection(self,line:Line, line_point_1:Point,line_point_2:Point) -> float:
         intersection_bool = self.is_line_intersection_between_points(line,line_point_1,line_point_2)
         if intersection_bool and self.is_vertical():
             return line_point_1.x_coordinate
