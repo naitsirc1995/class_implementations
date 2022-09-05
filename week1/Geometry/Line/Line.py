@@ -19,8 +19,7 @@ class Line:
         if p1 and not p2 and slope and not y_intersection:
             raise ValueError("[error] y_intersection needed to make a line")
         
-        if (p1 is not None and  p2 is None) and (slope is None and y_intersection is None):
-            print(p1,p2,slope,y_intersection)
+        if (p1 is not None and  p2 is None) and (slope is None and y_intersection is None):            
             raise ValueError("[error] a second point or a slope is needed to form a line")
 
         if (p1 is None and p2 is not None) and (slope is None and y_intersection is None):
@@ -63,7 +62,7 @@ class Line:
         elif (slope_value == 0) and not (self.p1 or self.p2):
             raise ValueError("With a zero slope at least one point must be provided")
         else:
-            print(f"[info] slope was set with value {slope_value}")
+            #print(f"[info] slope was set with value {slope_value}")
             self._slope = slope_value
     
 
@@ -89,7 +88,7 @@ class Line:
         if self._y_intersection:            
             raise ValueError("y-intersection was already provided")
         else:
-            print(f"[info] y-intersection was set with value {y_intersection_value}")
+            #print(f"[info] y-intersection was set with value {y_intersection_value}")
             self._y_intersection = y_intersection_value
 
 
@@ -102,7 +101,7 @@ class Line:
         if self._p1:            
             raise ValueError("p1 point was already provided")
         else:
-            print(f"[info] {p1_value} is a point of the line")
+            #print(f"[info] {p1_value} is a point of the line")
             self._p1 = p1_value
     
     
@@ -115,7 +114,7 @@ class Line:
         if self._p2:
             raise ValueError("p2 point was already provided")
         else:
-            print(f"[info] {p2_value} is a point of the line")
+            #print(f"[info] {p2_value} is a point of the line")
             self._p2 = p2_value
 
     @property
@@ -156,10 +155,9 @@ class Line:
         if not self.belongs(line_point_1) or not self.belongs(line_point_2):
             ValueError("[error] one of the points given does not belong to the line")
         if self.belongs(line_point_1) and self.belongs(line_point_2) and self.belongs(point):
-            print(f"[info] points {line_point_1} and {line_point_2} were given")
-            print(f"[info] asserting if {point} is in between points given")
-            if self.is_vertical():
-                print("did I get here?")
+            #print(f"[info] points {line_point_1} and {line_point_2} were given")
+            #print(f"[info] asserting if {point} is in between points given")
+            if self.is_vertical():                
                 min_y = min(line_point_1.y_coordinate,line_point_2.y_coordinate)
                 max_y = max(line_point_1.y_coordinate,line_point_2.y_coordinate) 
                 return (min_y < point.y_coordinate) and (max_y > point.y_coordinate)
@@ -176,7 +174,7 @@ class Line:
                 return (min_y < point.y_coordinate) and (max_y > point.y_coordinate) and (min_y < point.y_coordinate) and (max_y > point.y_coordinate)
 
         else:
-            print(f"[info] point {point} is not part of the line")
+            #print(f"[info] point {point} is not part of the line")
             return False
                         
             

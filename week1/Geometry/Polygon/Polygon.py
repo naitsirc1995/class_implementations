@@ -20,14 +20,14 @@ class Polygon:
         elif self._vertices:
             raise ValueError("[error] polygon already has points defined")            
         else:
-            print(f"[info] a polygon of {len(value)} vertices has been created")
-            print("[warning] remember that vertices of a polygon are immutable")
+            #print(f"[info] a polygon of {len(value)} vertices has been created")
+            #print("[warning] remember that vertices of a polygon are immutable")
             self._vertices = value
     
     @property
     def lines(self)->List[Line]:
-        print("[warning] the vertices provided should be given in order")
-        print("[warning] the vertices provided should represent a simple polygon")
+        #print("[warning] the vertices provided should be given in order")
+        #print("[warning] the vertices provided should represent a simple polygon")
         lines:List[Line] = []
         total_vertices:int = len(self.vertices)
         for i in range(0,total_vertices):
@@ -49,24 +49,27 @@ class Polygon:
             final_count = 0
             ray = Line(p1=point,slope=0)
             total_lines = len(self.lines)
+            poligon_lines = [line for line in self.lines if min(line.p1.y_coordinate,line.p2.y_coordinate) < point.y_coordinate and max(line.p1.y_coordinate,line.p2.y_coordinate) > point.y_coordinate]
             for i in range(total_lines):
+                
                 poligon_line:Line = self.lines[i]                
                 vertex1 = poligon_line.p1
                 vertex2 = poligon_line.p2
-                if poligon_line.is_horizontal():
+                if poligon_line.is_horizontal():                    
                     continue
-                elif vertex1.y_coordinate == point.y_coordinate and vertex1.x_coordinate > point.x_coordinate:
+                elif vertex1.y_coordinate == point.y_coordinate and vertex1.x_coordinate > point.x_coordinate:                    
                     final_count+=self.count_vertex_intersections(vertex1,self.lines[(i-1)%total_lines],poligon_line)
-                elif vertex2.y_coordinate == point.y_coordinate and vertex2.x_coordinate > point.x_coordinate:
+                elif vertex2.y_coordinate == point.y_coordinate and vertex2.x_coordinate > point.x_coordinate:                    
                     final_count+=self.count_vertex_intersections(vertex1,poligon_line,self.lines[(i+1)%total_lines])
-                else:                    
+                else:
                     if poligon_line.is_line_intersection_between_points(ray,vertex1,vertex2):
+                        print("line intersection")
                         x_intersection = poligon_line.get_x_intersection(ray,vertex1,vertex2)
-                        if x_intersection > ray.point.x_coordinate:
+                        if x_intersection > ray.point.x_coordinate:                            
                             print(f"final count was augmented with line {poligon_line.p1},{poligon_line.p2}")
                             final_count+=1                        
                     
-            print(f"final count {final_count}")
+            #print(f"final count {final_count}")
             return final_count
 
     
