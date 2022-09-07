@@ -45,17 +45,16 @@ def countryPolygonGraph(polygon:Polygon,number_of_arbitrary_points:int,figsize=(
     for point in points:
         try:
             if polygon.is_inside(point=point):                
-                plt.scatter(point.x_coordinate,point.y_coordinate,c='g')
-                print("inside")
-            else:
-                print("outside")  
-                plt.scatter(point.x_coordinate,point.y_coordinate,c='r')
+                plt.plot(point.x_coordinate,point.y_coordinate,marker='o', markersize=8,markerfacecolor='red')
+                #print("inside")
+            else:                
+                plt.plot(point.x_coordinate,point.y_coordinate, marker='o', markersize=8,markerfacecolor='green')
+                #print("outside")
         except ValueError as ve:
-            print("[error] value error with exception")
+            print(f"[error] value error with exception {ve}")
 
     plt.plot(x_coordinates,y_coordinates)
-    plt.scatter(arbitray_x,arbitray_y)
-    
+    #plt.scatter(arbitray_x,arbitray_y)    
 
     # for line in lines:
     #     p1 = line.p1

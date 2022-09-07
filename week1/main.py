@@ -5,7 +5,7 @@ from drawing.poligonPointGraph import pointPolygonGraph
 from cli.cli import parseArguments
 
 def main():
-    parseArguments()
+    parseArguments()    
 
 
 if __name__ == '__main__':

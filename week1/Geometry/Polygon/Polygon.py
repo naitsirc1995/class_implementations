@@ -1,10 +1,11 @@
 from typing import List
 from Geometry.Point.Point import Point
 from Geometry.Line.Line import Line
+import numpy as np
 
 class Polygon:
 
-    _vertices:List[Point] = None
+    _vertices:List[Point] = None    
 
     def __init__(self,vertices:List[Point]=None) -> None:
         self.vertices = vertices
@@ -49,27 +50,36 @@ class Polygon:
             final_count = 0
             ray = Line(p1=point,slope=0)
             total_lines = len(self.lines)
-            poligon_lines = [line for line in self.lines if min(line.p1.y_coordinate,line.p2.y_coordinate) < point.y_coordinate and max(line.p1.y_coordinate,line.p2.y_coordinate) > point.y_coordinate]
+            #poligon_lines = [line for line in self.lines if min(line.p1.y_coordinate,line.p2.y_coordinate) <= point.y_coordinate and max(line.p1.y_coordinate,line.p2.y_coordinate) >= point.y_coordinate]
+            #poligon_lines = [line for line in self.lines if min(line.p1.y_coordinate,line.p2.y_coordinate) <= point.y_coordinate and max(line.p1.y_coordinate,line.p2.y_coordinate) >= point.y_coordinate]
             for i in range(total_lines):
                 
                 poligon_line:Line = self.lines[i]                
                 vertex1 = poligon_line.p1
                 vertex2 = poligon_line.p2
-                if poligon_line.is_horizontal():                    
+                if max(poligon_line.p1.x_coordinate,poligon_line.p2.x_coordinate) < point.x_coordinate:
                     continue
-                elif vertex1.y_coordinate == point.y_coordinate and vertex1.x_coordinate > point.x_coordinate:                    
-                    final_count+=self.count_vertex_intersections(vertex1,self.lines[(i-1)%total_lines],poligon_line)
-                elif vertex2.y_coordinate == point.y_coordinate and vertex2.x_coordinate > point.x_coordinate:                    
-                    final_count+=self.count_vertex_intersections(vertex1,poligon_line,self.lines[(i+1)%total_lines])
+                elif poligon_line.is_horizontal():
+                    continue
+                elif np.abs(vertex1.y_coordinate - point.y_coordinate) == 0:
+                    augmenter = self.count_vertex_intersections(vertex1,self.lines[(i-1)%total_lines],poligon_line)
+                    final_count+= augmenter
+                    
+                elif  np.abs(vertex2.y_coordinate - point.y_coordinate) == 0:
+                    augmenter = self.count_vertex_intersections(vertex1,poligon_line,self.lines[(i+1)%total_lines])
+                    final_count+=augmenter
+                    
                 else:
-                    if poligon_line.is_line_intersection_between_points(ray,vertex1,vertex2):
-                        print("line intersection")
-                        x_intersection = poligon_line.get_x_intersection(ray,vertex1,vertex2)
-                        if x_intersection > ray.point.x_coordinate:                            
-                            print(f"final count was augmented with line {poligon_line.p1},{poligon_line.p2}")
-                            final_count+=1                        
+                    if poligon_line.is_vertical():
+                        x_intersection = poligon_line.point.x_coordinate
+                    else:
+                        x_intersection = (point.y_coordinate - poligon_line.y_intersection)/poligon_line.slope
+                    if min(poligon_line.p1.y_coordinate,poligon_line.p2.y_coordinate) < point.y_coordinate  and max(poligon_line.p1.y_coordinate,poligon_line.p2.y_coordinate) > point.y_coordinate and x_intersection > point.x_coordinate:                        
+                        final_count+=1                        
+                                             
                     
             #print(f"final count {final_count}")
+            print(f"[info] ({point.x_coordinate},{point.y_coordinate}) total number of intersects {final_count}")
             return final_count
 
     
@@ -88,4 +98,5 @@ class Polygon:
 
 
     def is_inside(self,point:Point) -> bool:       
-        return not self.count_intersections_point_ray(point=point)%2 == 0
+        print(f"{point} with counts {self.count_intersections_point_ray(point=point)%2}")
+        return self.count_intersections_point_ray(point=point)%2 == 0
