@@ -13,6 +13,12 @@ class Polygon {
 
     public:
         Polygon(Point *polygonPoints,int numberOfPoligonPoints);
+        PolygonVertex* getVertices();
+        
+    
+    private:
+        PolygonVertex* polygonVertices;
+        int numberOfVertices;
         
 
 };
