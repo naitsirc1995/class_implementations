@@ -38,23 +38,26 @@ Polygon* gift_wrapping(Point* arbitraryPoints,int numberOfPoints)
     }
 
     int i = 0;
+    
     while (true)
     {
         hull[i] = onHull;
         Point nextPoint = arbitraryPoints[0];
+        //std::cout << "The next point in polygon would be (" << nextPoint.x_coordinate << "," << nextPoint.y_coordinate << ")" << std::endl;
         for (int i = 0; i < numberOfPoints ; i++)
         {
             Point point = arbitraryPoints[i];
             int o = orientation(&onHull,&nextPoint,&point);
-            if (((nextPoint.x_coordinate == onHull.x_coordinate) && (nextPoint.y_coordinate == onHull.y_coordinate)) || (o==1))
+            if ((nextPoint == onHull || o == 1) || (o == 0 && (dist(onHull,point) > dist(onHull,nextPoint))))
             {
                 nextPoint = point;
             }
         }
         onHull = nextPoint;
-        if (onHull.x_coordinate == hull[0].x_coordinate && onHull.y_coordinate == hull[0].y_coordinate) break;
+        if (onHull == hull[0]) break;
+        i++;        
     }
-    i++;
-    Polygon polygon = Polygon(hull,numberOfPoints);
-    return &polygon;
+        
+    
+    return new Polygon(hull,numberOfPoints);
 }
