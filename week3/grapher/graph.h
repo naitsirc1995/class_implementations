@@ -4,6 +4,6 @@
 
 void do_nice_graph();
 
-void graphPolygon(Polygon* polygon);
+void graphPolygonAndRandomPoints(Polygon* polygon,Point* randomPoints,int numberOfRandomPoints);
 
 #endif 

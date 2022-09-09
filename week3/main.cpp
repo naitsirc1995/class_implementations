@@ -10,15 +10,20 @@
 
 int main()
 {
-    int polygonTotalPoints = 3;   
+    srand(time(NULL));
+    int polygonTotalPoints = 100;
+    int limit = 100;
     Point *pointList = new Point[polygonTotalPoints];
-    pointList[0] = {1,0};
-    pointList[1] = {0,1};
-    pointList[2] = {0,0};
-    
+
+    for (int i = 0; i<polygonTotalPoints; i++){
+        float randx = (std::rand()/float(RAND_MAX))*limit;
+        float randy = (std::rand()/float(RAND_MAX))*limit;
+        pointList[i] = {randx,randy};
+    }    
+        
     Polygon *convexHullPolygon = gift_wrapping(pointList,polygonTotalPoints);
     PolygonVertex* firstConvexHullPolygonVertex = convexHullPolygon->getVertices();
     
-    graphPolygon(convexHullPolygon);
+    graphPolygonAndRandomPoints(convexHullPolygon,pointList,polygonTotalPoints);
     return 0;
 }

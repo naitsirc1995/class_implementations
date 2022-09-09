@@ -11,7 +11,7 @@ void do_nice_graph()
 };
 
 
-void graphPolygon(Polygon* polygon)
+void graphPolygonAndRandomPoints(Polygon* polygon,Point* randomPoints,int numberOfRandomPoints)
 {
     int numberOfPoints = polygon->getNumberOfVertices();
     PolygonVertex* polygonVertices = polygon->getVertices();
@@ -24,6 +24,14 @@ void graphPolygon(Polygon* polygon)
         plt::plot(x,y);
     }
     
-    
+    std::vector<float> xrand;
+    std::vector<float> yrand;
+
+    for (int i = 0; i < numberOfRandomPoints; i++)
+    {
+        xrand.push_back(randomPoints[i].x_coordinate);
+        yrand.push_back(randomPoints[i].y_coordinate);
+    }
+    plt::plot(xrand,yrand,"r+");
     plt::show();
 }
