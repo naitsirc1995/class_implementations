@@ -14,7 +14,7 @@ class Polygon {
     public:
         Polygon(Point *polygonPoints,int numberOfPoligonPoints);
         PolygonVertex* getVertices();
-        
+        int getNumberOfVertices();
     
     private:
         PolygonVertex* polygonVertices;

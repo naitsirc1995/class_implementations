@@ -12,17 +12,13 @@ int main()
 {
     int polygonTotalPoints = 3;   
     Point *pointList = new Point[polygonTotalPoints];
-    pointList[0] = {100,4};
-    pointList[1] = {50,3};
-    pointList[2] = {1,2};
+    pointList[0] = {1,0};
+    pointList[1] = {0,1};
+    pointList[2] = {0,0};
     
     Polygon *convexHullPolygon = gift_wrapping(pointList,polygonTotalPoints);
     PolygonVertex* firstConvexHullPolygonVertex = convexHullPolygon->getVertices();
-    std::cout << "am I even doing something here?" << std::endl;
-    std::cout << "(" << (firstConvexHullPolygonVertex->point).x_coordinate << "," << (firstConvexHullPolygonVertex->point).y_coordinate << ")" << std::endl;
-    //std::cout << "(" << (convexHullPolygon->getVertices()->point).x_coordinate << "," << (convexHullPolygon->getVertices()->point).y_coordinate << ")" << std::endl;
-    //Polygon myPol = Polygon(pointList,polygonTotalPoints);  
     
-    do_nice_graph();
+    graphPolygon(convexHullPolygon);
     return 0;
 }

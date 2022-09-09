@@ -23,7 +23,6 @@ int orientation(Point* p1, Point* p2, Point* p3)
 }
 
 
-
 Polygon* gift_wrapping(Point* arbitraryPoints,int numberOfPoints)
 {
     Point onHull = arbitraryPoints[0];

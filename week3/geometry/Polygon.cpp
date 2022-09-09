@@ -45,3 +45,5 @@ Polygon::Polygon(Point *polygonPoints,int numberOfPoligonPoints)
 }
 
 PolygonVertex* Polygon::getVertices(){return polygonVertices;};
+
+int Polygon::getNumberOfVertices(){return numberOfVertices;};
