@@ -32,6 +32,10 @@ void graphPolygonAndRandomPoints(Polygon* polygon,Point* randomPoints,int number
         xrand.push_back(randomPoints[i].x_coordinate);
         yrand.push_back(randomPoints[i].y_coordinate);
     }
+
+    free(polygon);
+    free(randomPoints);
+    
     plt::plot(xrand,yrand,"r+");
     plt::show();
 }
