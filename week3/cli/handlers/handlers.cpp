@@ -14,32 +14,33 @@ Point* generateNRandomPoints(int numberOfPoints,int LOWER_BOUND,int UPPER_BOUND)
 
     return pointList;
 }
-
 // ----------------------------------------------------------------------------------
 
 
 
 // gift-wrapping algorithm handler------------------------------------------------
-void giftWrappingAlgorithmHandler(int numberOfRandomPoints)
+void giftWrappingAlgorithmHandler()
 {
-    giftWrappingAlgorithmHandler(numberOfRandomPoints,MAX_DEFAULT_LIMIT);
+    giftWrappingAlgorithmHandler(TOTAL_RANDOM_POINTS);
 }
 
-void giftWrappingAlgorithmHandler(int numberOfRandomPoints,int limit)
+void giftWrappingAlgorithmHandler(int numberOfRandomPoints)
+{
+    giftWrappingAlgorithmHandler(numberOfRandomPoints,UPPER_BOUND_GWA);
+}
+
+
+void giftWrappingAlgorithmHandler(int numberOfRandomPoints,int UPPER_BOUND)
+{
+    giftWrappingAlgorithmHandler(numberOfRandomPoints,UPPER_BOUND,LOWER_BOUND_GWA);
+}
+
+void giftWrappingAlgorithmHandler(int numberOfRandomPoints,int UPPER_BOUND,int LOWER_BOUND)
 {
     srand(time(NULL));
     int polygonTotalPoints = numberOfRandomPoints;    
-    Point* pointList = new Point[polygonTotalPoints];
-
-    for (int i = 0; i<polygonTotalPoints; i++){
-        float randx = (std::rand()/float(RAND_MAX))*limit;
-        float randy = (std::rand()/float(RAND_MAX))*limit;
-        pointList[i] = {randx,randy};
-    }
-        
-    Polygon* convexHullPolygon = gift_wrapping(pointList,polygonTotalPoints);
-    PolygonVertex* firstConvexHullPolygonVertex = convexHullPolygon->getVertices();
-    
+    Point* pointList = generateNRandomPoints(numberOfRandomPoints,LOWER_BOUND,UPPER_BOUND);        
+    Polygon* convexHullPolygon = gift_wrapping(pointList,polygonTotalPoints);    
     graphPolygonAndRandomPoints(convexHullPolygon,pointList,polygonTotalPoints);
 }
 //----------------------------------------------------------------------------------

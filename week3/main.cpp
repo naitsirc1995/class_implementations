@@ -6,6 +6,6 @@
 // testing
 int main()
 {    
-    giftWrappingAlgorithmHandler(1000);    
+    giftWrappingAlgorithmHandler();
     return 0;
 }
