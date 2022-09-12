@@ -65,7 +65,7 @@ void measureGWAEfficiency(std::vector<int> experimetationPoints)
         free(convexHullPolygon);
     }
 
-    std::cout << "N(Vertices) " << " | " << "T(miliseconds)" << std::endl;
+    std::cout << "N(Vertices) " << " | " << "T(microseconds)" << std::endl;
 
     for (int i = 0; i < vectorLength ; i++)
     {
