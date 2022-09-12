@@ -27,13 +27,9 @@ void measureGWAEfficiency(std::vector<int> number_random_points);
 
 
 
-// utils 
-Point* generateNRandomPoints(int numberOfPoints,int LOWER_BOUND,int UPPER_BOUND);
-//
-
-
 // external libraries
 #include <iostream>
 
-
+// Inside country handler.
+void insideCountryHandler(std::string countryName);
 #endif

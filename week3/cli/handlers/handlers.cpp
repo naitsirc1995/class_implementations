@@ -1,20 +1,6 @@
 #include "handlers.h"
-
-// utils 
-Point* generateNRandomPoints(int numberOfPoints,int LOWER_BOUND,int UPPER_BOUND)
-{
-    srand(time(NULL));
-    Point* pointList = new Point[numberOfPoints];
-    for (int i = 0; i < numberOfPoints ; i++)
-    {
-        float randx = LOWER_BOUND + (std::rand()/float(RAND_MAX))*(UPPER_BOUND-LOWER_BOUND);
-        float randy = LOWER_BOUND + (std::rand()/float(RAND_MAX))*(UPPER_BOUND-LOWER_BOUND);
-        pointList[i] = {randx,randy};
-    }
-
-    return pointList;
-}
-// ----------------------------------------------------------------------------------
+#include "utils.h"
+#include "../../grapher/graph.h"
 
 
 
@@ -87,4 +73,12 @@ void measureGWAEfficiency(std::vector<int> experimetationPoints)
     }
     free(NUMBER_VERTICES);
     free(TIMES);
+}
+
+
+
+void insideCountryHandler(std::string countryName)
+{
+    auto [points, numberOfPoints] = readCountry(countryName);
+    graphCountryPoints(points,numberOfPoints);
 }

@@ -1,13 +1,9 @@
 //handler
 #include "cli/handlers/handlers.h"
-// external libraries 
-#include <iostream>
-#include <chrono>
+#include "cli/handlers/utils.h"
 
-// testing
 int main()
-{
-    //giftWrappingAlgorithmHandler();    
-    measureGWAEfficiency();
+{        
+    insideCountryHandler("France");
     return 0;
 }

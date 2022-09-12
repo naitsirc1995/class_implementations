@@ -15,6 +15,8 @@ class Polygon {
         Polygon(Point *polygonPoints,int numberOfPoligonPoints);
         PolygonVertex* getVertices();
         int getNumberOfVertices();
+        int countPointIntersections(Point p);
+        bool isInside(Point p);
     
     private:
         PolygonVertex* polygonVertices;
@@ -23,4 +25,4 @@ class Polygon {
 
 };
 
-#endif 
+#endif
