@@ -5,7 +5,7 @@
 int main()
 {        
     //insideCountryHandler("France");
-    //giftWrappingAlgorithmHandler();
+    giftWrappingAlgorithmHandler();
     //measureGWAEfficiency();
     return 0;
 }

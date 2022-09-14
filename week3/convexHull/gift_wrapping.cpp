@@ -53,11 +53,11 @@ Polygon* gift_wrapping(Point* arbitraryPoints,int numberOfPoints)
         }
 
         onHull = nextPoint;
-        
-        if (onHull == hull[0]) break;
         i++;
+        if (onHull == hull[0]) break;
+        
     }
         
     
-    return new Polygon(hull,numberOfPoints);
+    return new Polygon(hull,i);
 }

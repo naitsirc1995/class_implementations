@@ -12,9 +12,9 @@ void giftWrappingAlgorithmHandler();
 void giftWrappingAlgorithmHandler(int numberOfRandomPoints);
 void giftWrappingAlgorithmHandler(int numberOfRandomPoints,int UPPER_BOUND);
 void giftWrappingAlgorithmHandler(int numberOfRandomPoints,int UPPER_BOUND,int LOWER_BOUND);
-const int TOTAL_RANDOM_POINTS = 1000;
-const int UPPER_BOUND_GWA = 100;
-const int LOWER_BOUND_GWA = 0;
+const int TOTAL_RANDOM_POINTS = 10;
+const int UPPER_BOUND_GWA = 200;
+const int LOWER_BOUND_GWA = 100;
 //----------------------------------------------------------------------
 
 
