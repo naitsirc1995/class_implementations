@@ -63,7 +63,7 @@ int Polygon::countPointIntersections(Point p)
         Point nextPoint = nextVertex->point;
         Point previousPoint = previousVertex->point;        
 
-        if ( std::max(currentPoint.x_coordinate,nextPoint.x_coordinate) < p.x_coordinate)
+        if ( std::max(currentPoint.x_coordinate,nextPoint.x_coordinate) <= p.x_coordinate)
         {
             //std::cout << "The line is to the left so does not count " << std::endl;
             continue;

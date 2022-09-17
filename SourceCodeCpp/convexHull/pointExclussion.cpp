@@ -1,7 +1,7 @@
 #include "pointExclussion.h"
 
 
-pointExclussionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
+PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
 {
     Point p1 = arbitraryPoints[0];
 
@@ -47,10 +47,12 @@ pointExclussionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         }
     }    
 
-    std::cout << "xMax (" << xMax.x_coordinate << "," << xMax.y_coordinate << ")" << std::endl;
-    std::cout << "yMax (" << yMax.x_coordinate << "," << yMax.y_coordinate << ")" << std::endl;
-    std::cout << "xMin (" << xMin.x_coordinate << "," << xMin.y_coordinate << ")" << std::endl;
-    std::cout << "yMin (" << yMin.x_coordinate << "," << yMin.y_coordinate << ")" << std::endl;
+    // std::cout << "xMax (" << xMax.x_coordinate << "," << xMax.y_coordinate << ")" << std::endl;
+    // std::cout << "yMax (" << yMax.x_coordinate << "," << yMax.y_coordinate << ")" << std::endl;
+    // std::cout << "xMin (" << xMin.x_coordinate << "," << xMin.y_coordinate << ")" << std::endl;
+    // std::cout << "yMin (" << yMin.x_coordinate << "," << yMin.y_coordinate << ")" << std::endl;
+
+
     ExcludePolygonVertices* excludePolygonVertices = new ExcludePolygonVertices{xMax,yMax,xMin,yMin};
     
     int numBoundaryVertices;
@@ -59,11 +61,11 @@ pointExclussionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
 
     Polygon* polygon;
 
-    if (xMin == yMax && xMax != yMin){
+    if (xMin == yMax && xMax != yMin){        
         numBoundaryVertices = 3;
         Point points[numBoundaryVertices] = {xMax,xMin,yMin};
         polygon = new Polygon(points,numBoundaryVertices);
-    } else if (xMax == yMax && xMin != yMin){
+    } else if (xMax == yMax && xMin != yMin){        
         numBoundaryVertices = 3;
         Point points[numBoundaryVertices] = {xMax,xMin,yMin};
         polygon = new Polygon(points,numBoundaryVertices);
@@ -72,7 +74,7 @@ pointExclussionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         Point points[numBoundaryVertices] = {yMax,xMin,xMax};
         polygon = new Polygon(points,numBoundaryVertices);
     } else if ( xMin == yMax && xMax == yMin ){
-        return new pointExclussionStruct{
+        return new PointExclusionStruct{
         excludePolygonVertices,
         arbitraryPoints,
         numberOfPoints,
@@ -80,28 +82,46 @@ pointExclussionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         0
     };
     } else if (xMax == yMax && xMin == yMin){
-        return new pointExclussionStruct{
+        return new PointExclusionStruct{
         excludePolygonVertices,
         arbitraryPoints,
         numberOfPoints,
         nullptr,
         0
     };
+    } else {
+        numBoundaryVertices = 4;
+        Point points[numBoundaryVertices] = {xMax,yMax,xMin,yMin};
+        polygon = new Polygon(points,numBoundaryVertices);
     }
     
     
 
-    return new pointExclussionStruct{
-        new ExcludePolygonVertices{
-            xMax,
-            yMax,
-            xMin,
-            yMin
-        },
-        new Point{1,2},
-        1,
-        new Point{1,3},
-        1
+    int numberOfIncludedPoints,numberOfExcludedPoints;
+    Point* includedPoints = new Point[numberOfPoints];
+    Point* excludedPoints = new Point[numberOfPoints];    
+
+    for (int i = 0; i < numberOfPoints;i++){
+        Point currentPoint = arbitraryPoints[i];        
+        if (currentPoint == xMax || currentPoint == yMax || currentPoint == xMin || currentPoint == yMin){
+            continue;
+        }        
+        else if (polygon->isInside(currentPoint)){            
+            excludedPoints[numberOfExcludedPoints] = currentPoint;
+            numberOfExcludedPoints++;
+        } else {            
+            includedPoints[numberOfIncludedPoints] = currentPoint;
+            numberOfIncludedPoints++;
+        }
+    }
+
+    
+    return new PointExclusionStruct{
+        excludePolygonVertices,
+        includedPoints,
+        numberOfIncludedPoints,
+        excludedPoints,
+        numberOfExcludedPoints
     };
 }
 

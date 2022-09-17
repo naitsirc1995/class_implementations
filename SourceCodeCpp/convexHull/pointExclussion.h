@@ -14,7 +14,7 @@ struct ExcludePolygonVertices {
     Point yMin;
 };
 
-struct pointExclussionStruct {
+struct PointExclusionStruct {
     ExcludePolygonVertices* excludePolygonVertices;
     Point* includedPoints;
     int numberOfIncludedPoints;
@@ -22,6 +22,6 @@ struct pointExclussionStruct {
     int numberOfExcludedPoints;    
 };
 
-pointExclussionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints);
+PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints);
 
 #endif
