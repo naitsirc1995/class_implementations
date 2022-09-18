@@ -16,4 +16,6 @@ void graphPolygonAndRandomPoints(Polygon* polygon,Point* randomPoints,int number
 void graphCountryPoints(Point* country, int countryTotalVertices);
 const int NUMBER_RANDOM_POINTS = 10000;
 //------------------------------------------------------------------------
+
+void do_scatter(std::vector<float> x,std::vector<float> y);
 #endif 

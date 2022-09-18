@@ -1,6 +1,5 @@
 #include "handlers.h"
 #include "utils.h"
-#include "../../grapher/graph.h"
 
 
 
@@ -81,4 +80,53 @@ void insideCountryHandler(std::string countryName)
 {
     auto [points, numberOfPoints] = readCountry(countryName);
     graphCountryPoints(points,numberOfPoints);
+}
+
+
+//---------------------------------------------------------------------
+
+void testPointGeneratorHandler()
+{
+    float initialPoint = 0;
+    float endPoint = 1;
+    int numberOfSteps = 500;
+    int numberOfFunctions = 3;
+    float (*fx[numberOfFunctions])(float t);
+    float (*fy[numberOfFunctions])(float t);
+
+    fx[0] = f1x;
+    fx[1] = f2x;
+    fx[2] = f3x;
+
+    fy[0] = f1y;
+    fy[1] = f2y;
+    fy[2] = f3y;
+
+    Point* receivedPoints = boundaryGenerator(initialPoint,endPoint,numberOfSteps,numberOfFunctions,fx,fy);    
+    std::vector<float> x;
+    std::vector<float> y;    
+    for (int i = 0; i < 1500;i++){
+        Point currentPoint = receivedPoints[i];
+        x.push_back(currentPoint.x_coordinate);
+        y.push_back(currentPoint.y_coordinate);
+    }
+
+
+    PolygonInterior* polygonInterior = interiorGenerator(receivedPoints,1500,500);
+    std::vector<float> xI;
+    std::vector<float> yI;
+    for (int i = 0; i < polygonInterior->numberOfInteriorPoints;i++){
+        Point currentPoint = polygonInterior->interiorPoints[i];
+        xI.push_back(currentPoint.x_coordinate);
+        yI.push_back(currentPoint.y_coordinate);
+    }
+            
+
+    plt::plot(x,y);
+    plt::plot(xI,yI,"g*");
+    plt::show();
+
+    free(fx);
+    free(fy);
+    free(receivedPoints);
 }

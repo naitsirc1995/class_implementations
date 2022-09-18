@@ -45,13 +45,7 @@ PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         if (currentPoint.y_coordinate == yMin.y_coordinate && currentPoint.x_coordinate < yMin.x_coordinate){            
             yMin = currentPoint;            
         }
-    }    
-
-    // std::cout << "xMax (" << xMax.x_coordinate << "," << xMax.y_coordinate << ")" << std::endl;
-    // std::cout << "yMax (" << yMax.x_coordinate << "," << yMax.y_coordinate << ")" << std::endl;
-    // std::cout << "xMin (" << xMin.x_coordinate << "," << xMin.y_coordinate << ")" << std::endl;
-    // std::cout << "yMin (" << yMin.x_coordinate << "," << yMin.y_coordinate << ")" << std::endl;
-
+    }
 
     ExcludePolygonVertices* excludePolygonVertices = new ExcludePolygonVertices{xMax,yMax,xMin,yMin};
     

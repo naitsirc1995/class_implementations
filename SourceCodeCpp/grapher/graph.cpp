@@ -130,3 +130,8 @@ void graphCountryPoints(Point* country, int countryTotalVertices)
     free(country);
     free(points);
 }
+
+
+void do_scatter(std::vector<float> x,std::vector<float> y){
+    //plt::plot(x,y); 
+}

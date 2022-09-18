@@ -5,6 +5,7 @@
 #include "../../grapher/graph.h"
 #include "../../geometry/Polygon.h"
 #include "../../geometry/Point.h"
+#include "../../geometry/pointsGenerators/functionGenerators.h"
 #include "../../convexHull/gift_wrapping.h"
 #include <vector>
 
@@ -32,4 +33,17 @@ void measureGWAEfficiency(std::vector<int> number_random_points);
 
 // Inside country handler.
 void insideCountryHandler(std::string countryName);
+
+//-------------------------------------------------------------
+
+
+// New part
+#include "../../geometry/pointsGenerators/lineTest/lineTest.h"
+#include "../../externalLibraries/matplotlibCpp/matplotlibcpp.h"
+void testPointGeneratorHandler();
+namespace plt = matplotlibcpp;
+
+//---------------------------------------
+
+
 #endif
