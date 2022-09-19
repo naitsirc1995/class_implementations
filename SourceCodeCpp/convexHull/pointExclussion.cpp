@@ -47,6 +47,7 @@ PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         }
     }
 
+    
     ExcludePolygonVertices* excludePolygonVertices = new ExcludePolygonVertices{xMax,yMax,xMin,yMin};
     
     int numBoundaryVertices;
@@ -90,8 +91,10 @@ PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
     }
     
     
+    
 
-    int numberOfIncludedPoints,numberOfExcludedPoints;
+    int numberOfIncludedPoints = 0;
+    int numberOfExcludedPoints = 0;
     Point* includedPoints = new Point[numberOfPoints];
     Point* excludedPoints = new Point[numberOfPoints];    
 
@@ -109,6 +112,10 @@ PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         }
     }
 
+    includedPoints[numberOfIncludedPoints++] = xMax;
+    includedPoints[numberOfIncludedPoints++] = xMin;
+    includedPoints[numberOfIncludedPoints++] = yMax;
+    includedPoints[numberOfIncludedPoints++] = yMin;
     
     return new PointExclusionStruct{
         excludePolygonVertices,
@@ -117,5 +124,11 @@ PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
         excludedPoints,
         numberOfExcludedPoints
     };
+}
+
+
+Polygon* executeFaxConvexHull(Point* arbitraryPoints,int numberOfPoints){    
+    PointExclusionStruct* filteredPoints = fastConvexHull(arbitraryPoints,numberOfPoints);    
+    return gift_wrapping(filteredPoints->includedPoints,filteredPoints->numberOfIncludedPoints);
 }
 

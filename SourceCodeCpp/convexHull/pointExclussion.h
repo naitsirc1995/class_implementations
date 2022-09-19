@@ -6,6 +6,7 @@
 // Geometry Classes by me
 #include "../geometry/Point.h"
 #include "../geometry/Polygon.h"
+#include "gift_wrapping.h"
 
 struct ExcludePolygonVertices {
     Point xMax;
@@ -23,5 +24,7 @@ struct PointExclusionStruct {
 };
 
 PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints);
+
+Polygon* executeFaxConvexHull(Point* arbitraryPoints,int numberOfPoints);
 
 #endif
