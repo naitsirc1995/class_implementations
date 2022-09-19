@@ -47,6 +47,12 @@ namespace plt = matplotlibcpp;
 //---------------------------------------
 
 
+// Circle Fast ConvexHull Algorithm
+#include "../../geometry/pointsGenerators/circle/circle.h"
+#include "../../convexHull/pointExclussion.h"
+#include "../../convexHull/gift_wrapping.h"
+void circleConvexHullHandler();
+//---------------------------------------
 
 
 #endif

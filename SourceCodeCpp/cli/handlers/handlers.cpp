@@ -159,3 +159,71 @@ void testPointGeneratorHandler()
 
     free(receivedPoints);
 }
+
+
+void circleConvexHullHandler(){
+    float initialPoint = 0;
+    float endPoint = 2*M_PI;
+    int numberOfSteps = 500;
+    int numberOfFunctions = 1;
+    float (*fx[numberOfFunctions])(float t);
+    float (*fy[numberOfFunctions])(float t);
+
+    fx[0] = circleX;
+    fy[0] = circleY;
+    
+    Point* receivedPoints = boundaryGenerator(initialPoint,endPoint,numberOfSteps,numberOfFunctions,fx,fy);    
+    std::vector<float> x;
+    std::vector<float> y;    
+    for (int i = 0; i < 500;i++){
+        Point currentPoint = receivedPoints[i];
+        x.push_back(currentPoint.x_coordinate);
+        y.push_back(currentPoint.y_coordinate);
+    }
+
+
+    PolygonInterior* polygonInterior = interiorGenerator(receivedPoints,500,1000);    
+    std::vector<float> xI;
+    std::vector<float> yI;
+    for (int i = 0; i < polygonInterior->numberOfInteriorPoints;i++){
+        Point currentPoint = polygonInterior->interiorPoints[i];
+        xI.push_back(currentPoint.x_coordinate);
+        yI.push_back(currentPoint.y_coordinate);
+    }
+    
+    PointExclusionStruct* pointExclusionStruct = fastConvexHull(polygonInterior->interiorPoints,polygonInterior->numberOfInteriorPoints);
+    ExcludePolygonVertices* excludePolygonVertices = pointExclusionStruct->excludePolygonVertices;
+
+    std::vector<float> xE = {excludePolygonVertices->xMax.x_coordinate,excludePolygonVertices->yMax.x_coordinate,excludePolygonVertices->xMin.x_coordinate,excludePolygonVertices->yMin.x_coordinate};
+    std::vector<float> yE = {excludePolygonVertices->xMax.y_coordinate,excludePolygonVertices->yMax.y_coordinate,excludePolygonVertices->xMin.y_coordinate,excludePolygonVertices->yMin.y_coordinate};
+
+    plt::scatter(xE,yE,200);
+    
+    std::vector<float> xIncluded;
+    std::vector<float> yIncluded;
+
+    for (int i = 0 ; i < pointExclusionStruct->numberOfIncludedPoints;i++ ){
+        Point p = pointExclusionStruct->includedPoints[i];
+        xIncluded.push_back(p.x_coordinate);
+        yIncluded.push_back(p.y_coordinate);
+    }
+
+    plt::scatter(xIncluded,yIncluded,100);
+
+    Polygon* polygon = executeFaxConvexHull(polygonInterior->interiorPoints,polygonInterior->numberOfInteriorPoints);    
+    PolygonVertex* vertices = polygon->getVertices();
+    for (int i = 0; i < polygon->getNumberOfVertices() ; i++ ){
+        PolygonVertex v = vertices[i];
+        Point p1 = v.point;
+        Point p2 = v.next->point;
+        std::vector<float> x = {p1.x_coordinate,p2.x_coordinate};
+        std::vector<float> y = {p1.y_coordinate,p2.y_coordinate};
+        plt::plot(x,y);
+    }
+
+    plt::plot(x,y);
+    plt::plot(xI,yI,"g*");
+    plt::show();
+
+    free(receivedPoints);    
+}
