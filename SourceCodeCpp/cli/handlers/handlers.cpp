@@ -129,7 +129,24 @@ void testPointGeneratorHandler()
     std::vector<float> xE = {excludePolygonVertices->xMax.x_coordinate,excludePolygonVertices->yMax.x_coordinate,excludePolygonVertices->xMin.x_coordinate,excludePolygonVertices->yMin.x_coordinate};
     std::vector<float> yE = {excludePolygonVertices->xMax.y_coordinate,excludePolygonVertices->yMax.y_coordinate,excludePolygonVertices->xMin.y_coordinate,excludePolygonVertices->yMin.y_coordinate};
 
-    plt::scatter(xE,yE,200);
+    plt::scatter(xE,yE,500);
+
+    std::vector<float> l1x = { excludePolygonVertices->xMax.x_coordinate, excludePolygonVertices->yMax.x_coordinate};
+    std::vector<float> l1y = { excludePolygonVertices->xMax.y_coordinate, excludePolygonVertices->yMax.y_coordinate};
+
+    std::vector<float> l2x = { excludePolygonVertices->yMax.x_coordinate, excludePolygonVertices->xMin.x_coordinate};
+    std::vector<float> l2y = { excludePolygonVertices->yMax.y_coordinate, excludePolygonVertices->xMin.y_coordinate};
+
+    std::vector<float> l3x = { excludePolygonVertices->yMin.x_coordinate, excludePolygonVertices->xMin.x_coordinate};
+    std::vector<float> l3y = { excludePolygonVertices->yMin.y_coordinate, excludePolygonVertices->xMin.y_coordinate};
+
+    std::vector<float> l4x = { excludePolygonVertices->yMin.x_coordinate, excludePolygonVertices->xMax.x_coordinate};
+    std::vector<float> l4y = { excludePolygonVertices->yMin.y_coordinate, excludePolygonVertices->xMax.y_coordinate};
+
+    plt::plot(l1x,l1y);
+    plt::plot(l2x,l2y);
+    plt::plot(l3x,l3y);
+    plt::plot(l4x,l4y);
     
     std::vector<float> xIncluded;
     std::vector<float> yIncluded;
@@ -197,7 +214,24 @@ void circleConvexHullHandler(){
     std::vector<float> xE = {excludePolygonVertices->xMax.x_coordinate,excludePolygonVertices->yMax.x_coordinate,excludePolygonVertices->xMin.x_coordinate,excludePolygonVertices->yMin.x_coordinate};
     std::vector<float> yE = {excludePolygonVertices->xMax.y_coordinate,excludePolygonVertices->yMax.y_coordinate,excludePolygonVertices->xMin.y_coordinate,excludePolygonVertices->yMin.y_coordinate};
 
-    plt::scatter(xE,yE,200);
+    plt::scatter(xE,yE,500);
+
+    std::vector<float> l1x = { excludePolygonVertices->xMax.x_coordinate, excludePolygonVertices->yMax.x_coordinate};
+    std::vector<float> l1y = { excludePolygonVertices->xMax.y_coordinate, excludePolygonVertices->yMax.y_coordinate};
+
+    std::vector<float> l2x = { excludePolygonVertices->yMax.x_coordinate, excludePolygonVertices->xMin.x_coordinate};
+    std::vector<float> l2y = { excludePolygonVertices->yMax.y_coordinate, excludePolygonVertices->xMin.y_coordinate};
+
+    std::vector<float> l3x = { excludePolygonVertices->xMin.x_coordinate, excludePolygonVertices->yMin.x_coordinate};
+    std::vector<float> l3y = { excludePolygonVertices->xMin.y_coordinate, excludePolygonVertices->yMin.y_coordinate};
+
+    std::vector<float> l4x = { excludePolygonVertices->yMin.x_coordinate, excludePolygonVertices->xMax.x_coordinate};
+    std::vector<float> l4y = { excludePolygonVertices->yMin.y_coordinate, excludePolygonVertices->xMax.y_coordinate};
+
+    plt::plot(l1x,l1y);
+    plt::plot(l2x,l2y);
+    plt::plot(l3x,l3y);
+    plt::plot(l4x,l4y);
     
     std::vector<float> xIncluded;
     std::vector<float> yIncluded;
