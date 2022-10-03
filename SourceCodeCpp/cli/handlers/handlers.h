@@ -21,9 +21,13 @@ const int LOWER_BOUND_GWA = 100;
 
 // Measuring efficiency for the gift Wrapping Algorithm
 #include <chrono>
-const std::vector<int> EXPERIMENTATION_POINTS = {10,50,100,500,1000,5000,10000,50000,1000000};
+const std::vector<int> EXPERIMENTATION_POINTS = {10,50,100,500,1000,5000,10000,30000,40000,45000};
 void measureGWAEfficiency();
 void measureGWAEfficiency(std::vector<int> number_random_points);
+void convexHullEfficiencySquare();
+void convexHullEfficiencySquare(std::vector<int> experimetationPoints);
+void convexHullEfficiencyCircleBoundary();
+void convexHullEfficiencyCircleBoundary(std::vector<int> experimetationPoints);
 //----------------------------------------------------------------------
 
 
