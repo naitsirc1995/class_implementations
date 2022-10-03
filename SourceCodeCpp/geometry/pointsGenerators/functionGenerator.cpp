@@ -8,7 +8,7 @@ Point* boundaryGenerator(
     float (**fx)(float t),
     float (**fy)(float t)    
 ){
-    int totalNubmerOfPoints = numberOfSteps*numberOfFunctions;    
+    int totalNubmerOfPoints = numberOfSteps*numberOfFunctions;
 
     float stepSize = (endPoint - initialPoint)/(numberOfSteps-1);
     int pointCounter=0;
@@ -26,9 +26,11 @@ Point* boundaryGenerator(
     return finalPoints;
 }
 
-
-
-PolygonInterior* interiorGenerator(Point* polygonPoints, int numberOfPolygonPoints, int numberOfRandomPoints){
+PolygonInterior* interiorGenerator(
+    Point* polygonPoints, 
+    int numberOfPolygonPoints, 
+    int numberOfRandomPoints
+){
     std::cout << "[info] remember that the function interiorGenerator is expecting polygon points counterclockwise" << std::endl;
     Polygon* polygon = new Polygon(polygonPoints,numberOfPolygonPoints);
 
@@ -76,3 +78,98 @@ PolygonInterior* interiorGenerator(Point* polygonPoints, int numberOfPolygonPoin
         numberOfInteriorPoints
     };
 };
+
+PolygonGenerated* CircleGenerator(
+    int numberOfBoundaryPoints,
+    int numberOfInteriorPoints,
+    bool includeBoundary,
+    float initialPoint, 
+    float endPoint,    
+    float numberOfFunctions
+){
+    int arrayCapacity = numberOfBoundaryPoints + numberOfInteriorPoints;
+    int numbersToReturn = numberOfInteriorPoints;
+
+    if (includeBoundary == true) numbersToReturn+=numberOfBoundaryPoints;
+    float (*fx[numberOfBoundaryPoints])(float t);
+    float (*fy[numberOfBoundaryPoints])(float t);
+
+    fx[0] = circleX;
+    fy[0] = circleY;
+
+    Point* boundaryPoints = boundaryGenerator(initialPoint,endPoint,numberOfBoundaryPoints,numberOfFunctions,fx,fy);
+    PolygonInterior* polygonInterior = interiorGenerator(boundaryPoints,numberOfBoundaryPoints,numberOfInteriorPoints);
+
+    if (!includeBoundary){
+        return new PolygonGenerated{
+            polygonInterior->interiorPoints,
+            polygonInterior->numberOfInteriorPoints
+        };
+    } else {
+        int capacity = numberOfBoundaryPoints + polygonInterior->numberOfInteriorPoints;
+        Point* pointsGenerated;
+        int numberOfInteriorPoints = polygonInterior->numberOfInteriorPoints;
+        for (int i = 0; i < numberOfInteriorPoints; i++ ){
+            pointsGenerated[i] = polygonInterior->interiorPoints[i];
+        }
+
+        for (int i = 0; i < numberOfBoundaryPoints; i++ ){
+            pointsGenerated[i+numberOfInteriorPoints] = boundaryPoints[i];
+        }
+
+        return new PolygonGenerated{
+            pointsGenerated,
+            capacity
+        };
+    }
+};
+
+PolygonGenerated* CircleGenerator(
+    int numberOfBoundaryPoints,
+    int numberOfInteriorPoints    
+){
+    return CircleGenerator(
+        numberOfBoundaryPoints,
+        numberOfInteriorPoints,
+        includeCircleBoundary,
+        initialCirclePoint,
+        endCirclePoint,
+        numberOfCircleFunctions
+    );
+}
+
+
+PolygonGenerated* CircleBoundaryGenerator(
+    int numberOfBoundaryPoints,        
+    float initialPoint, 
+    float endPoint, 
+    float numberOfFunctions
+){     
+    
+    float (*fx[numberOfBoundaryPoints])(float t);
+    float (*fy[numberOfBoundaryPoints])(float t);
+
+    fx[0] = circleX;
+    fy[0] = circleY;
+
+    Point* boundaryPoints = boundaryGenerator(initialPoint,endPoint,numberOfBoundaryPoints,numberOfFunctions,fx,fy);    
+    
+
+    return new PolygonGenerated{
+        boundaryPoints,
+        numberOfBoundaryPoints
+    };
+    
+}
+
+
+PolygonGenerated* CircleBoundaryGenerator(
+    int numberOfBoundaryPoints
+){
+    return CircleBoundaryGenerator(
+        numberOfBoundaryPoints,
+        initialCirclePoint,
+        endCirclePoint,
+        numberOfCircleFunctions
+    );
+}

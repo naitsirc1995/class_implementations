@@ -86,7 +86,6 @@ void insideCountryHandler(std::string countryName)
 
 
 //---------------------------------------------------------------------
-
 void testPointGeneratorHandler()
 {
     float initialPoint = 0;
@@ -96,13 +95,13 @@ void testPointGeneratorHandler()
     float (*fx[numberOfFunctions])(float t);
     float (*fy[numberOfFunctions])(float t);
 
-    fx[0] = f1x;
-    fx[1] = f2x;
-    fx[2] = f3x;
+    fx[0] = eqTf1x;
+    fx[1] = eqTf2x;
+    fx[2] = eqTf3x;
 
-    fy[0] = f1y;
-    fy[1] = f2y;
-    fy[2] = f3y;
+    fy[0] = eqTf1y;
+    fy[1] = eqTf2y;
+    fy[2] = eqTf3y;
 
     Point* receivedPoints = boundaryGenerator(initialPoint,endPoint,numberOfSteps,numberOfFunctions,fx,fy);    
     std::vector<float> x;
@@ -260,4 +259,18 @@ void circleConvexHullHandler(){
     plt::show();
 
     free(receivedPoints);    
+}
+
+
+void simplifiedTestHandler(){
+    int numBoundaryPoints = 500000;
+    int numInteriorPoints = 5000000;
+    //PolygonGenerated* convexHullPoints = CircleBoundaryGenerator(numBoundaryPoints);
+    PolygonGenerated* convexHullPoints = CircleGenerator(numBoundaryPoints,numInteriorPoints);
+    
+    //Polygon* polygon = gift_wrapping(convexHullPoints->points,numBoundaryPoints);
+    
+    Polygon* polygon = grahamScan(convexHullPoints->points,convexHullPoints->numberOfPoints);
+    
+    graphPolygonAndRandomPoints(polygon,convexHullPoints->points,convexHullPoints->numberOfPoints);
 }

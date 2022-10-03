@@ -38,7 +38,7 @@ void insideCountryHandler(std::string countryName);
 
 
 // Fast ConvexHull Algorithm
-#include "../../geometry/pointsGenerators/lineTest/lineTest.h"
+#include "../../geometry/pointsGenerators/equilateralTriangle/equilateralTriangle.h"
 #include "../../externalLibraries/matplotlibCpp/matplotlibcpp.h"
 #include "../../convexHull/pointExclussion.h"
 #include "../../convexHull/gift_wrapping.h"
@@ -55,4 +55,8 @@ void circleConvexHullHandler();
 //---------------------------------------
 
 
+
+// Simplified code handler
+#include "../../convexHull/graham_scam.h"
+void simplifiedTestHandler();
 #endif

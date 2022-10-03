@@ -127,8 +127,7 @@ PointExclusionStruct* fastConvexHull(Point* arbitraryPoints,int numberOfPoints)
 }
 
 
-Polygon* executeFaxConvexHull(Point* arbitraryPoints,int numberOfPoints){    
+Polygon* executeFaxConvexHull(Point* arbitraryPoints,int numberOfPoints){
     PointExclusionStruct* filteredPoints = fastConvexHull(arbitraryPoints,numberOfPoints);    
     return gift_wrapping(filteredPoints->includedPoints,filteredPoints->numberOfIncludedPoints);
 }
-
