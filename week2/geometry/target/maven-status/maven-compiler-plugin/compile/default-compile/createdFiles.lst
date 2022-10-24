@@ -1,0 +1,6 @@
+br/impa/algorithms/dcel/Vertex.class
+br/impa/algorithms/dcel/DCEL.class
+br/impa/algorithms/dcel/Face.class
+br/impa/algorithms/App.class
+br/impa/algorithms/dcel/Point.class
+br/impa/algorithms/dcel/HalfEdge.class

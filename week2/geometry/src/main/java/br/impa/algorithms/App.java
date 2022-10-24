@@ -6,6 +6,7 @@ import br.impa.algorithms.dcel.Point;
 
 import java.util.ArrayList;
 
+
 /**
  * Hello world!
  *
@@ -13,16 +14,17 @@ import java.util.ArrayList;
 public class App 
 {
     public static void main( String[] args ) throws Exception {
-        ArrayList<Point> points = new ArrayList<Point>();
-        points.add(new Point(1,0));
-        points.add(new Point(0,1));
-        points.add(new Point(-1,0));
-        points.add(new Point(0,-1));
 
-        DCEL dcel = new DCEL(points);
-        ArrayList<HalfEdge> he = dcel.getHalfEdges();
-        Face firstTwinEdge = he.get(0).getTwin().getNext().getNext().getNext().getNext().getNext().getFace();
-        System.out.println(firstTwinEdge.getEdge().getOrigin().getPoint().x_coordinate());
+        System.out.println("This is great actually");
+        // ArrayList<Point> points = new ArrayList<Point>();
+        // points.add(new Point(1,0));
+        // points.add(new Point(0,1));
+        // points.add(new Point(-1,0));
+        // points.add(new Point(0,-1));
+        // DCEL dcel = new DCEL(points);
+        // ArrayList<HalfEdge> he = dcel.getHalfEdges();
+        // Face firstTwinEdge = he.get(0).getTwin().getNext().getNext().getNext().getNext().getNext().getFace();
+        // System.out.println(firstTwinEdge.getEdge().getOrigin().getPoint().x_coordinate());
 
     }
 
